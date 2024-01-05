@@ -184,7 +184,9 @@ class Paimon:
                     self.speak(f"はい {translated_response}")
                     # Append the response to the conversation history
                     self.conversation_history.append(f"Paimon: はい {response.text}")
-
+                     # Save conversation history to file
+                    
+                self.save_conversation_to_file()
         except sr.UnknownValueError:
             print("Google Speech Recognition could not understand audio.")
      
@@ -198,8 +200,7 @@ class Paimon:
         self.state = "norm"
         self.random_speech_cooldown = time.time() + 30
 
-        # Save conversation history to file
-        self.save_conversation_to_file()
+
         
 
     def save_conversation_to_file(self):

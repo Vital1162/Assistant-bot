@@ -5,7 +5,7 @@ a = Analysis(
     ['paimon.py'],
     pathex=[],
     binaries=[],
-    datas=[('assets_2/*.png', 'assets_2/')],
+    datas=[('assets_2/*.png', 'assets_2/'), ('*.txt', '.')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
