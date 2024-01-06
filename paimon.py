@@ -23,43 +23,45 @@ from PIL import Image, ImageTk
 from tkinter import scrolledtext
 import pygetwindow as gw
 import json
-genai.configure(api_key="AIzaSyAqNmllczUTlKBq7GbXCDe5NpiIR2hVETU")
+genai.configure(api_key="")
 
 
 
 
 # Set up the model
 generation_config = {
-  "temperature": 0.9,
+  "temperature": 1,
   "top_p": 1,
   "top_k": 1,
-  "max_output_tokens": 2048,
+  "max_output_tokens": 30,
 }
 
 safety_settings = [
-  {
-    "category": "HARM_CATEGORY_HARASSMENT",
-    "threshold": "BLOCK_MEDIUM_AND_ABOVE"
-  },
-  {
-    "category": "HARM_CATEGORY_HATE_SPEECH",
-    "threshold": "BLOCK_MEDIUM_AND_ABOVE"
-  },
-  {
-    "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-    "threshold": "BLOCK_MEDIUM_AND_ABOVE"
-  },
-  {
-    "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
-    "threshold": "BLOCK_MEDIUM_AND_ABOVE"
-  }
+#   {
+#     "category": "HARM_CATEGORY_HARASSMENT",
+#     "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+#   },
+#   {
+#     "category": "HARM_CATEGORY_HATE_SPEECH",
+#     "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+#   },
+#   {
+#     "category": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+#     "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+#   },
+#   {
+#     "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
+#     "threshold": "BLOCK_MEDIUM_AND_ABOVE"
+#   }
 ]
 
 model = genai.GenerativeModel(model_name="gemini-pro",
                               generation_config=generation_config,
                               safety_settings=safety_settings)
 
-desc = "You are my voice assistant name Paimon.You funny and always make a jokes about me. Take a short answer only below 30 words.If it too long you can't explain later on\n "
+desc = """
+
+"""
 monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
 work_area = monitor_info.get('Work')
 screen_width = work_area[2]
@@ -115,8 +117,11 @@ class Paimon:
         self.text_label.pack(expand=True, fill='both')
         self.text_label.insert(tk.END, "Wait for responsed...")
 
-
-        self.random_speech_cooldown = 0
+        # #random speak
+        # self.random_speech_cooldown = 0
+        
+  
+        
         self.active_windown_cooldown = 0
 
         # Bind mouse click event on the cat image
@@ -154,7 +159,7 @@ class Paimon:
                 audio = self.recognizer.listen(source, timeout=5)
                 command = self.recognizer.recognize_google(audio).lower()
                 print(command)
-                command = f"Our last conservation {self.conversation_history[-5:]} "+ command 
+                command = f"{command}. {desc}. Our last conservation {''.join(map(str,self.conversation_history[-5:]))}." 
                 # Append the command to the conversation history
                 self.conversation_history.append(f"User: {command}")
 
@@ -198,7 +203,7 @@ class Paimon:
        
 
         self.state = "norm"
-        self.random_speech_cooldown = time.time() + 30
+        # self.random_speech_cooldown = time.time() + 30
 
 
         
@@ -228,35 +233,6 @@ class Paimon:
         return translated_response.text
 
 
-    # def speak(self, text):
-    
-    #     text_to_speech = TextToSpeech(text)
-    #     audio_url = text_to_speech.generate_audio()
-    #     if audio_url:
-    #         # Save the audio file using a unique filename with a WAV extension
-    #         # timestamp = int(time.time())
-    #         # unique_filename = f"output_{timestamp}.wav"
-    #         unique_filename = "output.wav"
-    #         unique_file_path = os.path.join(os.path.dirname(__file__), unique_filename)
-    #         print(unique_file_path)
-    #         if text_to_speech.save_audio(audio_url, unique_file_path):
-    #             try:
-    #                 # Use pydub to load and play the audio
-    #                 audio = AudioSegment.from_file(unique_file_path,"wav")
-                    
-    #                 play(audio)
-    #                 self.text_label.delete(1.0, tk.END)
-    #                 old_text = Translator().translate(text,'en').text
-    #                 self.text_label.insert(tk.END, old_text)
-                   
-                 
-
-    #             except Exception as e:
-    #                 print(f"Error during audio playback: {e}")
-    #         else:
-    #             print("[Failed] Failed to generate audio")
-    #     else:
-    #         print("[Failed] Failed to generate audio URL")
             
     def speak(self, text):
         retry_count = 0
@@ -299,12 +275,16 @@ class Paimon:
         if self.state == "norm":
             self.frame = self.norm[self.frame_index]
             self.frame_index = (self.frame_index + 1) % len(self.norm)
+            #random speak
             if not self.is_speaking and random.randint(1, 100) <= 5 and time.time() > self.random_speech_cooldown:
                 self.is_speaking= True
                 threading.Thread(target=self.speak_random).start()
                 self.random_speech_cooldown = time.time() + random.randint(120, 360)
+
+                    
         elif self.state == "listen":
             self.frame = self.listen[0]
+            # self.random_speech_cooldown = time.time() + 120
 
         self.window.geometry('112x128+' + str(self.x) + '+' + str(self.y))
         self.label.configure(image=self.frame)
@@ -312,9 +292,8 @@ class Paimon:
 
 
     def speak_random(self):
-        print(''.join(map(str,self.conversation_history[-5:])))
-        response = model.generate_content(f"From our last converstation {''.join(map(str,self.conversation_history[-5:]))} .talk 1 senseless sentence for me, or you can tease me or compliment me or say cute things for me. In general, just choose one ")
-        print(response.text)
+        print(''.join(map(str,self.conversation_history[-1:])))
+        response = model.generate_content(f"{desc} From last converstation {''.join(map(str,self.conversation_history[-5:]))}. Master still not reply")
         translator = Translator()
         translated_response = self.translate_with_retry(translator,response)
         print(translated_response)
@@ -328,3 +307,4 @@ class Paimon:
 
 if __name__ == "__main__":
     ket = Paimon()
+    print(ket.conversation_history)
