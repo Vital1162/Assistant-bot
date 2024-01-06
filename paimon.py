@@ -10,7 +10,7 @@ from playsound import playsound
 from threading import Thread
 import threading
 import os
-from WaifuVoice import TextToSpeech,TextTranslator
+from WaifuVoice import TextToSpeech
 from pydub import AudioSegment
 # import audiosegment
 from pydub.playback import play
@@ -59,7 +59,7 @@ model = genai.GenerativeModel(model_name="gemini-pro",
                               generation_config=generation_config,
                               safety_settings=safety_settings)
 
-desc = "You are my voice assistant name Paimon. No matter what you responsed to me only must below 100 words.\n "
+desc = "You are my voice assistant name Paimon.You funny and always make a jokes about me. Take a short answer only below 30 words.If it too long you can't explain later on\n "
 monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
 work_area = monitor_info.get('Work')
 screen_width = work_area[2]
@@ -93,7 +93,7 @@ class Paimon:
         
         
         self.conversation_history = []
-        self.conversation_file_path = os.path.join(os.path.dirname(__file__), "conversation_history.txt")
+        self.conversation_file_path = os.path.join('C:/Users/ADMIN/Paimon', "conversation_history.txt")
         # Create the conversation_history.txt file if it doesn't exist
         # Load existing conversation history from file if it exists
         if os.path.exists(self.conversation_file_path):
@@ -312,11 +312,11 @@ class Paimon:
 
 
     def speak_random(self):
-        # print(self.conversation_history)
-        response = model.generate_content(f"From our last converstation {self.conversation_history[-5:]} .talk 1 senseless sentence for me, or you can tease me or compliment me or say cute thing for me. In general, just choose one ")
+        print(''.join(map(str,self.conversation_history[-5:])))
+        response = model.generate_content(f"From our last converstation {''.join(map(str,self.conversation_history[-5:]))} .talk 1 senseless sentence for me, or you can tease me or compliment me or say cute things for me. In general, just choose one ")
         print(response.text)
         translator = Translator()
-        translated_response = translator.translate(response.text,'ja').text
+        translated_response = self.translate_with_retry(translator,response)
         print(translated_response)
         # Use text-to-speech to speak the random phrase
         self.speak(translated_response)

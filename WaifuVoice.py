@@ -3,53 +3,53 @@ import requests
 import speech_recognition as sr
 import httpcore
 
-class AudioToText:
-    def __init__(self, audio_file, debug):
-        self.audio_file = audio_file
-        self.recognizer = sr.Recognizer()
-        self.debug = debug
+# class AudioToText:
+#     def __init__(self, audio_file, debug):
+#         self.audio_file = audio_file
+#         self.recognizer = sr.Recognizer()
+#         self.debug = debug
 
-    def convert(self):
-        try:
-            with sr.AudioFile(self.audio_file) as audio:
-                audio_data = self.recognizer.record(audio)
-            text = self.recognizer.recognize_google(audio_data, language='en-EN')
-            print(f"[Success] You say: {text}")
-            return text
-        except Exception as e:
-            if self.debug == "y":
-                print(e)
-            return None
-
-
-class MicToText:
-    def __init__(self):
-        self.recognizer = sr.Recognizer()
-
-    def convert(self):
-        try:
-            with sr.Microphone() as audio:
-                print("Speak now...")
-                audio_data = self.recognizer.listen(audio)
-                print(f"Received audio data: {audio_data}")
-            text = self.recognizer.recognize_google(audio_data, language='en-EN')
-            print(f"[Success] You say: {text}")
-            return text
-        except:
-            return None
+#     def convert(self):
+#         try:
+#             with sr.AudioFile(self.audio_file) as audio:
+#                 audio_data = self.recognizer.record(audio)
+#             text = self.recognizer.recognize_google(audio_data, language='en-EN')
+#             print(f"[Success] You say: {text}")
+#             return text
+#         except Exception as e:
+#             if self.debug == "y":
+#                 print(e)
+#             return None
 
 
-class TextTranslator:
-    def __init__(self, text):
-        self.text = text
+# class MicToText:
+#     def __init__(self):
+#         self.recognizer = sr.Recognizer()
 
-    def translate(self, source, target):
-        try:
-            translated_text = tss.google(self.text, source, target)
-            print(f"[Success] Translated: {translated_text}")
-            return translated_text
-        except:
-            return None
+#     def convert(self):
+#         try:
+#             with sr.Microphone() as audio:
+#                 print("Speak now...")
+#                 audio_data = self.recognizer.listen(audio)
+#                 print(f"Received audio data: {audio_data}")
+#             text = self.recognizer.recognize_google(audio_data, language='en-EN')
+#             print(f"[Success] You say: {text}")
+#             return text
+#         except:
+#             return None
+
+
+# class TextTranslator:
+#     def __init__(self, text):
+#         self.text = text
+
+#     def translate(self, source, target):
+#         try:
+#             translated_text = tss.google(self.text, source, target)
+#             print(f"[Success] Translated: {translated_text}")
+#             return translated_text
+#         except:
+#             return None
 
 
 import time
