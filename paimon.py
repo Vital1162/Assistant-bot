@@ -23,7 +23,7 @@ from PIL import Image, ImageTk
 from tkinter import scrolledtext
 import pygetwindow as gw
 import json
-genai.configure(api_key="AIzaSyAqNmllczUTlKBq7GbXCDe5NpiIR2hVETU")
+genai.configure(api_key="")
 
 
 
