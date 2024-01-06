@@ -59,7 +59,7 @@ model = genai.GenerativeModel(model_name="gemini-pro",
                               generation_config=generation_config,
                               safety_settings=safety_settings)
 
-desc = "You are my voice assistant name Paimon.You funny and always make a jokes about me. Take a short answer only below 30 words.If it too long you can't explain later on\n "
+desc = " "
 monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
 work_area = monitor_info.get('Work')
 screen_width = work_area[2]
@@ -313,7 +313,7 @@ class Paimon:
 
     def speak_random(self):
         print(''.join(map(str,self.conversation_history[-5:])))
-        response = model.generate_content(f"From our last converstation {''.join(map(str,self.conversation_history[-5:]))} .talk 1 senseless sentence for me, or you can tease me or compliment me or say cute things for me. In general, just choose one ")
+        response = model.generate_content(f"{desc} From our last converstation {''.join(map(str,self.conversation_history[-5:]))}.Say random")
         print(response.text)
         translator = Translator()
         translated_response = self.translate_with_retry(translator,response)
