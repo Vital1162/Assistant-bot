@@ -59,9 +59,13 @@ model = genai.GenerativeModel(model_name="gemini-pro",
                               generation_config=generation_config,
                               safety_settings=safety_settings)
 
+<<<<<<< HEAD
 desc = """
 
 """
+=======
+desc = " "
+>>>>>>> 6a9dfc720b9c2fb4f44e9432437f0110e5b425b9
 monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
 work_area = monitor_info.get('Work')
 screen_width = work_area[2]
@@ -292,8 +296,14 @@ class Paimon:
 
 
     def speak_random(self):
+<<<<<<< HEAD
         print(''.join(map(str,self.conversation_history[-1:])))
         response = model.generate_content(f"{desc} From last converstation {''.join(map(str,self.conversation_history[-5:]))}. Master still not reply")
+=======
+        print(''.join(map(str,self.conversation_history[-5:])))
+        response = model.generate_content(f"{desc} From our last converstation {''.join(map(str,self.conversation_history[-5:]))}.Say random")
+        print(response.text)
+>>>>>>> 6a9dfc720b9c2fb4f44e9432437f0110e5b425b9
         translator = Translator()
         translated_response = self.translate_with_retry(translator,response)
         print(translated_response)
@@ -307,4 +317,7 @@ class Paimon:
 
 if __name__ == "__main__":
     ket = Paimon()
+<<<<<<< HEAD
     print(ket.conversation_history)
+=======
+>>>>>>> 6a9dfc720b9c2fb4f44e9432437f0110e5b425b9
