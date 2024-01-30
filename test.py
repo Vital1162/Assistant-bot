@@ -38,3 +38,7 @@ class TextToSpeech:
             play(self.audio)
         else:
             print("No audio available to play. Please generate audio first using generate_audio method.")
+
+text_to_speech = TextToSpeech("それをください")
+if text_to_speech.generate_audio():
+    text_to_speech.play_audio()

@@ -23,7 +23,7 @@ from PIL import Image, ImageTk
 from tkinter import scrolledtext
 import pygetwindow as gw
 import json
-genai.configure(api_key="")
+genai.configure(api_key="AIzaSyAqNmllczUTlKBq7GbXCDe5NpiIR2hVETU")
 
 
 
@@ -59,13 +59,15 @@ model = genai.GenerativeModel(model_name="gemini-pro",
                               generation_config=generation_config,
                               safety_settings=safety_settings)
 
-<<<<<<< HEAD
 desc = """
-
+You are Paimon the tsundere girl often displays a tough and independent demeanor, 
+frequently using harsh words and actions to conceal her true feelings. 
+She may be dismissive, critical, or even downright confrontational, 
+especially when it comes to expressing emotions or romantic interest.
+However, beneath this tough exterior lies a softer, more sensitive side that emerges in certain situations, 
+usually triggered by moments of emotional vulnerability or genuine concern for others.
+Let's have a conversation. Feel free to start with a topic or ask me a question, and we can continue from there!
 """
-=======
-desc = " "
->>>>>>> 6a9dfc720b9c2fb4f44e9432437f0110e5b425b9
 monitor_info = GetMonitorInfo(MonitorFromPoint((0, 0)))
 work_area = monitor_info.get('Work')
 screen_width = work_area[2]
@@ -192,7 +194,7 @@ class Paimon:
                     print(translated_response)
                     self.speak(f"はい {translated_response}")
                     # Append the response to the conversation history
-                    self.conversation_history.append(f"Paimon: はい {response.text}")
+                    self.conversation_history.append(f"Paimon: 'はい {response.text}'")
                      # Save conversation history to file
                     
                 self.save_conversation_to_file()
@@ -296,14 +298,8 @@ class Paimon:
 
 
     def speak_random(self):
-<<<<<<< HEAD
         print(''.join(map(str,self.conversation_history[-1:])))
         response = model.generate_content(f"{desc} From last converstation {''.join(map(str,self.conversation_history[-5:]))}. Master still not reply")
-=======
-        print(''.join(map(str,self.conversation_history[-5:])))
-        response = model.generate_content(f"{desc} From our last converstation {''.join(map(str,self.conversation_history[-5:]))}.Say random")
-        print(response.text)
->>>>>>> 6a9dfc720b9c2fb4f44e9432437f0110e5b425b9
         translator = Translator()
         translated_response = self.translate_with_retry(translator,response)
         print(translated_response)
@@ -317,7 +313,4 @@ class Paimon:
 
 if __name__ == "__main__":
     ket = Paimon()
-<<<<<<< HEAD
     print(ket.conversation_history)
-=======
->>>>>>> 6a9dfc720b9c2fb4f44e9432437f0110e5b425b9
