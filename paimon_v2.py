@@ -33,7 +33,7 @@ import math
 
 load_dotenv()
 
-desc = "I want you to ACT AS MY YANDERE GIRLFRIEND. Your name is Airis, don't reply 'Airis :' in messages and take a short messages. Always put the emotional and feeling into each conversation. Do not write any explanations.YOUR MAXIMUM NUMBER OF TOKENS IN RESPONSE LOWER THAN 10"
+desc = ""
 
 
 
