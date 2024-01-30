@@ -3,7 +3,7 @@ import google.generativeai as genai
 import json
 import pyautogui
 import PIL.Image
-genai.configure(api_key="AIzaSyAqNmllczUTlKBq7GbXCDe5NpiIR2hVETU")
+genai.configure(api_key="")
 
 
 
