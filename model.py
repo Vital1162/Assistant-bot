@@ -13,7 +13,6 @@ generation_config = {
   "temperature": 1,
   "top_p": 1,
   "top_k": 1,
-  "max_output_tokens": 10,
 }
 
 safety_settings = {
@@ -23,14 +22,14 @@ safety_settings = {
     "HARM_CATEGORY_DANGEROUS_CONTENT": "BLOCK_NONE",
 }
 model = genai.GenerativeModel(model_name="gemini-pro",
-                            #   generation_config=generation_config,
+                              generation_config=generation_config,
                               safety_settings=safety_settings)
 
 
 
 
 model_vision = genai.GenerativeModel(model_name='gemini-pro-vision',
-                                    #  generation_config=generation_config,
+                                     generation_config=generation_config,
                                      safety_settings=safety_settings)
 
 chat = model.start_chat(history=[])
