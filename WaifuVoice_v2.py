@@ -10,7 +10,7 @@ class TextToSpeech:
 
     def play_audio(self,speaker_id=20):
         try:
-            url = f"https://deprecatedapis.tts.quest/v2/voicevox/audio/?key=y650753772948-c&speaker={speaker_id}&pitch=0&intonationScale=1&speed=1&text={self.text}"
+            url = f"https://deprecatedapis.tts.quest/v2/voicevox/audio/?key={VOICEVOX_API}&speaker={speaker_id}&pitch=0&intonationScale=1&speed=1&text={self.text}"
 
             audio_content = requests.get(url).content
             # Load the WAV file using AudioSegment
