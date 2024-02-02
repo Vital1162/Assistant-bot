@@ -4,6 +4,9 @@ from pydub.playback import play
 import io
 import time
 
+####################################
+#        NO API REQUIREMENT        #
+####################################
 class TextToSpeech:
     def __init__(self, text):
         self.text = text
